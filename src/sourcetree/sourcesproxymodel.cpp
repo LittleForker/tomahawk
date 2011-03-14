@@ -22,7 +22,7 @@
 #include <QTreeView>
 
 #include "sourcesmodel.h"
-#include "sourcetreeitem.h"
+#include "sourcetree/sourcetreeitem.h"
 
 
 SourcesProxyModel::SourcesProxyModel( SourcesModel* model, QObject* parent )
@@ -64,12 +64,14 @@ SourcesProxyModel::filterAcceptsRow( int sourceRow, const QModelIndex& sourcePar
     if ( !m_filtered )
         return true;
     
-    SourceTreeItem* sti = m_model->indexToTreeItem( sourceModel()->index( sourceRow, 0, sourceParent ) );
+    CollectionItem* sti = qobject_cast< CollectionItem* >( m_model->data( sourceModel()->index( sourceRow, 0, sourceParent ), SourcesModel::SourceTreeItemRole ).value< SourceTreeItem* >() );
     if ( sti )
     {
         if ( sti->source().isNull() || sti->source()->isOnline() )
             return true;
+        else
+            return false;
     }
-
-    return false;
+    // accept rows that aren't sources
+    return true;
 }

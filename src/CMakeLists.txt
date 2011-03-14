@@ -62,7 +62,6 @@ SET( tomahawkSourcesGui ${tomahawkSourcesGui}
      sourcetree/sourcesmodel.cpp
      sourcetree/sourcesproxymodel.cpp
      sourcetree/sourcetreeitem.cpp
-     sourcetree/sourcetreeitemwidget.cpp
      sourcetree/sourcetreeview.cpp
 
      transferview.cpp
@@ -104,7 +103,6 @@ SET( tomahawkHeadersGui ${tomahawkHeadersGui}
      sourcetree/sourcesmodel.h
      sourcetree/sourcesproxymodel.h
      sourcetree/sourcetreeitem.h
-     sourcetree/sourcetreeitemwidget.h
      sourcetree/sourcetreeview.h
 
      transferview.h
@@ -120,7 +118,6 @@ SET( tomahawkUI ${tomahawkUI}
      proxydialog.ui
 
      audiocontrols.ui
-     sourcetree/sourcetreeitemwidget.ui
 )
 
 INCLUDE_DIRECTORIES(
