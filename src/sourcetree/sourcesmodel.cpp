@@ -32,6 +32,7 @@ SourcesModel::SourcesModel( QObject* parent )
     : QAbstractItemModel( parent )
 {
     m_rootItem = new SourceTreeItem( this, 0, Invalid );
+    appendItem( source_ptr() );
     
     onSourcesAdded( SourceList::instance()->sources() );
     connect( SourceList::instance(), SIGNAL( sourceAdded( Tomahawk::source_ptr ) ), SLOT( onSourceAdded( Tomahawk::source_ptr ) ) );
@@ -80,13 +81,6 @@ SourcesModel::rowCount( const QModelIndex& parent ) const
     return itemFromIndex( parent )->children().count();
 }
 
-bool 
-SourcesModel::hasChildren( const QModelIndex& parent ) const
-{
-    return rowCount( parent ) > 0;
-}
-
-
 QModelIndex 
 SourcesModel::parent( const QModelIndex& child ) const
 {
@@ -100,7 +94,7 @@ SourcesModel::parent( const QModelIndex& child ) const
     if( parent == m_rootItem ) 
         return QModelIndex();
     
-    return createIndex( rowForItem( node ), 0, parent );
+    return createIndex( rowForItem( parent ), 0, parent );
 }
 
 QModelIndex 
@@ -179,10 +173,11 @@ SourcesModel::appendItem( const Tomahawk::source_ptr& source )
     m_rootItem->appendChild( item );
     endInsertRows();
     
-    qDebug() << "Appending source item:" << item->source()->friendlyName();
     
     if ( !source.isNull() )
     {
+        qDebug() << "Appending source item:" << item->source()->friendlyName();
+        
         connect( source.data(), SIGNAL( stats( QVariantMap ) ), SLOT( onSourceChanged() ) );
         connect( source.data(), SIGNAL( playbackStarted( Tomahawk::query_ptr ) ), SLOT( onSourceChanged() ) );
         connect( source.data(), SIGNAL( stateChanged() ), SLOT( onSourceChanged() ) );
@@ -366,7 +361,7 @@ SourcesModel::indexFromItem( SourceTreeItem* item ) const
         idx = index( childIndexList[ i ], 0, idx );
     }
     qDebug() << "Got index from item:" << idx << idx.data( Qt::DisplayRole ).toString();
-    
+    qDebug() << "parent:" << idx.parent();
     return idx;
 }
 
