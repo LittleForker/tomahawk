@@ -42,14 +42,13 @@ public:
         Collection = 0,
         
         Category = 1,
+        CategoryAdd = 2,
         
-        StaticPlaylist = 2,
-        NewStaticPlaylist = 3,
+        StaticPlaylist = 3,
         
         AutomaticPlaylist = 4,
         
         Stations = 5,
-        NewStation = 6
         
     };
     
@@ -82,6 +81,11 @@ public:
     void appendItem( const Tomahawk::source_ptr& source );
     bool removeItem( const Tomahawk::source_ptr& source );
     
+    // HACK i don't like this
+    // SLOW DON'T USE IF YOU CAN AVOID IT
+    QModelIndex indexFromPlaylist( const Tomahawk::playlist_ptr& playlist );
+    QModelIndex indexFromItem( SourceTreeItem* item ) const;
+    
 signals:
     void clicked( const QModelIndex& );
     
@@ -102,7 +106,6 @@ public slots:
     void onItemRowsRemovedDone();
 private:
     SourceTreeItem* itemFromIndex( const QModelIndex& idx ) const;
-    QModelIndex indexFromItem( SourceTreeItem* item ) const;
     
     Tomahawk::playlist_ptr playlistFromItem( SourceTreeItem* item ) const;
     int rowForItem( SourceTreeItem* item ) const;
