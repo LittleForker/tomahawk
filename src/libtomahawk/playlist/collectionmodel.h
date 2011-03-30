@@ -68,7 +68,7 @@ signals:
     void repeatModeChanged( PlaylistInterface::RepeatMode mode );
     void shuffleModeChanged( bool enabled );
 
-    void loadingStarts();
+    void loadingStarted();
     void loadingFinished();
     void trackCountChanged( unsigned int tracks );
 

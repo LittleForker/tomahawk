@@ -182,7 +182,7 @@ CollectionModel::addCollection( const collection_ptr& collection )
                             << collection->source()->id()
                             << collection->source()->userName();
 
-    emit loadingStarts();
+    emit loadingStarted();
 
     connect( collection.data(), SIGNAL( tracksAdded( QList<Tomahawk::query_ptr>, Tomahawk::collection_ptr ) ),
                                   SLOT( onTracksAdded( QList<Tomahawk::query_ptr>, Tomahawk::collection_ptr ) ) );

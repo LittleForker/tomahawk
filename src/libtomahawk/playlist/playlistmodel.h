@@ -71,9 +71,6 @@ signals:
 
     void itemSizeChanged( const QModelIndex& index );
 
-    void loadingStarts();
-    void loadingFinished();
-
 private slots:
     void onDataChanged();
 
