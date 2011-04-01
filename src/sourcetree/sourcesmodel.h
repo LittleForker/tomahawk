@@ -50,6 +50,7 @@ public:
         
         Stations = 5,
         
+        GenericPage = 6
     };
     
     enum CategoryType {
