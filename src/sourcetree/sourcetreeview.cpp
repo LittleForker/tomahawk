@@ -79,7 +79,9 @@ SourceTreeView::SourceTreeView( QWidget* parent )
     setAllColumnsShowFocus( true );
     setUniformRowHeights( false );
     setIndentation( 16 );
-    setAnimated( true );
+    // TODO animation conflicts with the expanding-playlists-when-collection-is-null
+    // so investigate
+//     setAnimated( true );
     
     setItemDelegate( new SourceDelegate( this ) );
 
@@ -235,7 +237,7 @@ SourceTreeView::onItemExpanded( const QModelIndex& idx )
     // make sure to expand children nodes for collections
     if( idx.data( SourcesModel::SourceTreeItemTypeRole ) == SourcesModel::Collection ) {
        for( int i = 0; i < model()->rowCount( idx ); i++ ) {
-           expand( model()->index( i, 0, idx ) );
+           setExpanded( model()->index( i, 0, idx ), true );
        }
     }
 }
@@ -264,20 +266,6 @@ SourceTreeView::deletePlaylist()
         playlist_ptr playlist = item->playlist();
         Playlist::remove( playlist );
     }
-//     SourcesModel::SourceType type = SourcesModel::indexType( idx );
-//     if ( type == SourcesModel::PlaylistSource )
-//     {
-//         playlist_ptr playlist = SourcesModel::indexToPlaylist( idx );
-//         if ( !playlist.isNull() )
-//         {
-//             qDebug() << "Playlist about to be deleted:" << playlist->title();
-//             Playlist::remove( playlist );
-//         }
-//     } else if( type == SourcesModel::DynamicPlaylistSource ) {
-//         dynplaylist_ptr playlist = SourcesModel::indexToDynamicPlaylist( idx );       
-//         if( !playlist.isNull() )
-//             DynamicPlaylist::remove( playlist );
-//     }
 }
 
 

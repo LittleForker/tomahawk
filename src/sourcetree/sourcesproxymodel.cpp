@@ -33,6 +33,8 @@ SourcesProxyModel::SourcesProxyModel( SourcesModel* model, QObject* parent )
     setDynamicSortFilter( true );
 
     setSourceModel( model );
+    
+    connect( model, SIGNAL( askForExpand( QModelIndex ) ), this, SLOT( askedToExpand( QModelIndex ) ) );
 }
 
 
@@ -41,9 +43,6 @@ SourcesProxyModel::showOfflineSources()
 {
     m_filtered = false;
     invalidateFilter();
-
-//    Q_ASSERT( qobject_cast<QTreeView*>( parent() ) );
-//    qobject_cast<QTreeView*>( parent() )->expandAll();
 }
 
 
@@ -52,9 +51,6 @@ SourcesProxyModel::hideOfflineSources()
 {
     m_filtered = true;
     invalidateFilter();
-
-//    Q_ASSERT( qobject_cast<QTreeView*>( parent() ) );
-//    qobject_cast<QTreeView*>( parent() )->expandAll();
 }
 
 

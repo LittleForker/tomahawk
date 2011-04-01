@@ -178,8 +178,6 @@ SourcesModel::appendItem( const Tomahawk::source_ptr& source )
     // append to end
     CollectionItem* item = new CollectionItem( this, m_rootItem, source );
     connect( item, SIGNAL( updated() ), this, SLOT( collectionUpdated() ) );
-    
-    m_rootItem->appendChild( item );
     endInsertRows();
     
     
