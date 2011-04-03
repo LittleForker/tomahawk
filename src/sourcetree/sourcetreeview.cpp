@@ -114,6 +114,12 @@ SourceTreeView::SourceTreeView( QWidget* parent )
                                             SLOT( onTempPageActivated() ) );
     connect( PlaylistManager::instance(), SIGNAL( newPlaylistActivated() ),
                                             SLOT( onNewPlaylistPageActivated() ) );
+
+// Light-blue sourcetree on osx
+#ifdef Q_WS_MAC
+    setStyleSheet( "SourceTreeView:active { background: #DDE4EB; } "
+                    "SourceTreeView { background: #EDEDED; } " );
+#endif
 }
 
 
