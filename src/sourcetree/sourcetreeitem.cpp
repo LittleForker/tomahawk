@@ -33,6 +33,7 @@ SourceTreeItem::SourceTreeItem( SourcesModel* model, SourceTreeItem* parent, Sou
     , m_parent( parent )
     , m_model( model )
 {       
+    connect( this, SIGNAL( updated() ), m_model, SLOT( onItemUpdated() ) );
     connect( this, SIGNAL( beginChildRowsAdded( int,int ) ), m_model, SLOT( onItemRowsAddedBegin( int,int ) ) );
     connect( this, SIGNAL( beginChildRowsRemoved( int,int ) ), m_model, SLOT( onItemRowsRemovedBegin( int,int ) ) );
     connect( this, SIGNAL( childRowsAdded() ), m_model, SLOT( onItemRowsAddedDone() ) );

@@ -98,6 +98,8 @@ public slots:
     void loadSources();
     void collectionUpdated();
     
+    void onItemUpdated();
+
     void onItemRowsAddedBegin( int first, int last );
     void onItemRowsAddedDone();
     void onItemRowsRemovedBegin( int first, int last );

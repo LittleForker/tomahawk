@@ -316,6 +316,19 @@ SourcesModel::collectionUpdated()
 
 }
 
+void
+SourcesModel::onItemUpdated()
+{
+    Q_ASSERT( qobject_cast< SourceTreeItem* >( sender() ) );
+    SourceTreeItem* item = qobject_cast< SourceTreeItem* >( sender() );
+
+    if( !item )
+        return;
+
+    QModelIndex idx = indexFromItem( item );
+    emit dataChanged( idx, idx );
+}
+
 void 
 SourcesModel::onItemRowsAddedBegin( int first, int last )
 {
