@@ -95,7 +95,6 @@ private slots:
     void onSourceChanged();
     
 public slots:
-    void loadSources();
     void collectionUpdated();
     
     void onItemUpdated();

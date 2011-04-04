@@ -37,7 +37,7 @@ DatabaseCollection::DatabaseCollection( const source_ptr& src, QObject* parent )
 void
 DatabaseCollection::loadPlaylists()
 {
-    qDebug() << Q_FUNC_INFO;
+    qDebug() << Q_FUNC_INFO << "for source:" << source()->friendlyName();
     DatabaseCommand_LoadAllPlaylists* cmd = new DatabaseCommand_LoadAllPlaylists( source() );
 
     connect( cmd,  SIGNAL( done( const QList<Tomahawk::playlist_ptr>& ) ),

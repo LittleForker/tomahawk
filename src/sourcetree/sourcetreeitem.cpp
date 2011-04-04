@@ -333,11 +333,8 @@ CollectionItem::CollectionItem(  SourcesModel* mdl, SourceTreeItem* parent, cons
     QList< playlist_ptr > playlists = source->collection()->playlists();
     
     if( !playlists.isEmpty() || source->isLocal() ) {
-        m_playlists = new CategoryItem( model(), this, SourcesModel::PlaylistsCategory, source->isLocal() );    
-        // ugh :( we're being added by the model, no need to notify for added rows now
-//         m_playlists->blockSignals( true );
-        onPlaylistsAdded( source->collection()->playlists() );
-//         m_playlists->blockSignals( false );
+        m_playlists = new CategoryItem( model(), this, SourcesModel::PlaylistsCategory, source->isLocal() );
+        onPlaylistsAdded( playlists );
     }
     
     // TODO always show for now, till we actually support stations

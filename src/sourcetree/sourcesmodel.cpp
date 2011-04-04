@@ -280,16 +280,6 @@ SourcesModel::onSourceChanged() {
 }
 
 void
-SourcesModel::loadSources()
-{
-    QList<source_ptr> sources = SourceList::instance()->sources();
-    
-    foreach( const source_ptr& source, sources )
-        appendItem( source );
-}
-
-
-void
 SourcesModel::onSourcesAdded( const QList<source_ptr>& sources )
 {
     foreach( const source_ptr& source, sources )
