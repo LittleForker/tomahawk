@@ -311,7 +311,6 @@ CategoryItem::insertItems( QList< SourceTreeItem* > items )
         curCount--; 
     beginRowsAdded( curCount, curCount + items.size() - 1 );
     foreach( SourceTreeItem* item, items ) {
-        int index = m_showAdd ? children().count() - 1 : children().count();
         insertChild( children().count() - 1, item );
     }
     endRowsAdded();
@@ -348,6 +347,11 @@ CollectionItem::CollectionItem(  SourcesModel* mdl, SourceTreeItem* parent, cons
              SLOT( onPlaylistsAdded( QList<Tomahawk::playlist_ptr> ) ) );
     connect( source->collection().data(), SIGNAL( playlistsDeleted( QList<Tomahawk::playlist_ptr> ) ),
              SLOT( onPlaylistsDeleted( QList<Tomahawk::playlist_ptr> ) ) );
+    
+    connect( source.data(), SIGNAL( stateChanged() ), this, SLOT( stateChanged() ) );
+    connect( source.data(), SIGNAL( playbackStarted( Tomahawk::query_ptr) ), this, SLOT( stateChanged() ) );
+    connect( source.data(), SIGNAL( stats( QVariantMap ) ), this, SLOT( stateChanged() ) );
+    connect( source.data(), SIGNAL( offline() ), this, SLOT( stateChanged() ) );
 }
 
 Tomahawk::source_ptr 
@@ -371,6 +375,13 @@ CollectionItem::activate()
         PlaylistManager::instance()->show( source()->collection() );
     }
 }
+
+void 
+CollectionItem::stateChanged()
+{
+    emit updated();
+}
+
 
 QIcon 
 CollectionItem::icon() const

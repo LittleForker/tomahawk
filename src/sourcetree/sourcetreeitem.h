@@ -136,6 +136,7 @@ private slots:
     void onPlaylistsAdded( const QList<Tomahawk::playlist_ptr>& playlists );
     void onPlaylistsDeleted( const QList<Tomahawk::playlist_ptr>& playlists );
     
+    void stateChanged();
 private:
     Tomahawk::source_ptr m_source;
     

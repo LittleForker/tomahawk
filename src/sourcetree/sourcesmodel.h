@@ -92,11 +92,7 @@ private slots:
     void onSourceAdded( const Tomahawk::source_ptr& source );
     void onSourceRemoved( const Tomahawk::source_ptr& source );
     
-    void onSourceChanged();
-    
-public slots:
-    void collectionUpdated();
-    
+public slots:    
     void onItemUpdated();
 
     void onItemRowsAddedBegin( int first, int last );
@@ -108,9 +104,6 @@ private:
     
     Tomahawk::playlist_ptr playlistFromItem( SourceTreeItem* item ) const;
     int rowForItem( SourceTreeItem* item ) const;
-//     QModelIndex indexForSource( Tomahawk::Source* source ) const;
-//     QModelIndex indexForPlaylist( Tomahawk::Playlist* pl ) const;
-//     QModelIndex indexForCategory( const QModelIndex& sourceIndex, CategoryType type );
     
     SourceTreeItem* m_rootItem;
 };

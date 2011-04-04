@@ -179,23 +179,10 @@ SourcesModel::flags( const QModelIndex& index ) const
 void 
 SourcesModel::appendItem( const Tomahawk::source_ptr& source )
 {
-    
     beginInsertRows( QModelIndex(), rowCount(), rowCount() );
     // append to end
-    CollectionItem* item = new CollectionItem( this, m_rootItem, source );
-    connect( item, SIGNAL( updated() ), this, SLOT( collectionUpdated() ) );
+    new CollectionItem( this, m_rootItem, source );
     endInsertRows();
-    
-    
-    if ( !source.isNull() )
-    {
-        qDebug() << "Appending source item:" << item->source()->friendlyName();
-        
-        connect( source.data(), SIGNAL( stats( QVariantMap ) ), SLOT( onSourceChanged() ) );
-        connect( source.data(), SIGNAL( playbackStarted( Tomahawk::query_ptr ) ), SLOT( onSourceChanged() ) );
-        connect( source.data(), SIGNAL( stateChanged() ), SLOT( onSourceChanged() ) );
-
-    }
 }
 
 bool 
@@ -215,8 +202,6 @@ SourcesModel::removeItem( const Tomahawk::source_ptr& source )
             beginRemoveRows( QModelIndex(), row, row );
             m_rootItem->removeChild( item );
             endRemoveRows();
-             
-//             onItemOffline( idx );
                 
             delete item;
             return true;
@@ -256,29 +241,6 @@ SourcesModel::indexFromPlaylist( const playlist_ptr& playlist )
     return idx;
 }
 
-
-void
-SourcesModel::onSourceChanged() {
-    
-    Source* src = qobject_cast< Source* >( sender() );
-    Q_ASSERT( src );
-    
-    qDebug() << "Searching for source item:" << src->friendlyName();
-    
-    for( int i = 0; i < rowCount(); i++ )
-    {
-        QModelIndex idx = index( i, 0 , QModelIndex() );
-        
-        if( idx.isValid() && itemFromIndex( idx ) && itemFromIndex( idx )->type() == Collection && // this is a source
-            static_cast< CollectionItem* >( itemFromIndex( idx ) )->source().data() == src )       // and it is the one we want
-        {
-            qDebug() << "Found changed source, emitting dataChanged:" << src->friendlyName();
-            emit dataChanged( idx, idx );
-            return;
-        }
-    }
-}
-
 void
 SourcesModel::onSourcesAdded( const QList<source_ptr>& sources )
 {
@@ -298,12 +260,6 @@ void
 SourcesModel::onSourceRemoved( const source_ptr& source )
 {
     removeItem( source );
-}
-
-void 
-SourcesModel::collectionUpdated()
-{
-
 }
 
 void
